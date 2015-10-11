@@ -28,15 +28,19 @@ http.createServer(function (request, response)
         var json = jsonString.length ? JSON.parse(jsonString) : '';
         var url = require('url').parse(request.url, true);
         var route = url['pathname'];
+	var routeExists = false;
 
         for (var i = 0; i < controllers.length; i++) {
             if (controllers[i].getRoute() === route) {
                 //TODO check if controller accepts authentication level
                 controllers[i].action(response, json, url['query']);
+		routeExists = true;
             }
         }
-        response.writeHead(404, {'Content-Type': 'text/plain'});
-        response.end('Page not found: ' + route);
+	if (!routeExists) {
+       		 response.writeHead(404, {'Content-Type': 'text/plain'});
+       		 response.end('Page not found: ' + route);
+	}
     });
 }).listen(8081);
 

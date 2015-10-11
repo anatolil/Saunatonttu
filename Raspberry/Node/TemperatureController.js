@@ -14,16 +14,20 @@ TemperatureController.prototype.getRoute = function()
 
 TemperatureController.prototype.action = function(response, json, query)
 {
-    response.writeHead(200, {'Content-Type': 'application/json'});
-    var jsonResponse = JSON.stringify({ temperature: getTemperature()});
-    response.end(jsonResponse);
-}
+    
+fs.readFile('/run/saunatonttu/temp.txt', "utf-8" , function (err, data) {
+   
+    if (err) {
+	response.writeHead(418, {'Content-Type': 'plain/text'});
+	response.end(err);
+    }
 
-function getTemperature (){
-  fs.readFile('/run/saunatonttu/temp.txt', function (err, data) {
-    if (err) throw err;
-    console.log(data);
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    var jsonResponse = JSON.stringify({ temperature: data});
+    response.end(jsonResponse);
+
   });
+
 }
 
 module.exports = TemperatureController;
