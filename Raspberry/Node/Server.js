@@ -4,14 +4,17 @@
 
 //Using
 var http = require("http");
+var TimeController = require('./TimeController.js');
+var LedController = require('./LedController.js');
 
-//Todo initialize controllers
-var controllers = new array();
+//TODO initialize controllers
+var controllers = new Array();
 controllers.push(new TimeController());
+controllers.push(new LedController());
 
 http.createServer(function (request, response) {
 	
-	//TODO get authenticationHeaders
+	//TODO get possible authenticationHeaders
 
 	var jsonString = '';
     request.on('data', function (data) {
@@ -24,10 +27,13 @@ http.createServer(function (request, response) {
 		var url = require('url').parse(request.url, true);
 		var route = url['pathname'];
 		
-		//Todo iterate trough all controllers
-		foreach (controllers.route === route) {
-			//Todo check if controller accepts authenticationlevel
-			controller.action(response, json, url['query']);
+		if (true) { //TODO Check here if route exists
+			for (var i = 0; i < controllers.length; i++) {
+				if (controllers[i].getRoute() === route) {
+					//TODO check if controller accepts authentication level
+					controllers[i].action(response, json, url['query']); 
+				}
+			}
 		}
 		else {
 			response.writeHead(404, {'Content-Type': 'text/plain'});
