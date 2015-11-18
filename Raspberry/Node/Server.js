@@ -4,15 +4,15 @@
 
 //Using
 var http = require('http');
-var TimeController = require('./TimeController.js');
 var LedController = require('./LedController.js');
 var TemperatureController = require('./TemperatureController.js');
+var TimeController = require('./TimeController.js');
 
 //Initialize controllers
 var controllers = new Array();
-controllers.push(new TimeController());
 controllers.push(new LedController());
 controllers.push(new TemperatureController());
+controllers.push(new TimeController());
 
 http.createServer(function (request, response)
 {	
@@ -28,19 +28,18 @@ http.createServer(function (request, response)
         var json = jsonString.length ? JSON.parse(jsonString) : '';
         var url = require('url').parse(request.url, true);
         var route = url['pathname'];
-	var routeExists = false;
 
-        for (var i = 0; i < controllers.length; i++) {
-            if (controllers[i].getRoute() === route) {
+        for (var i = 0; i <= controllers.length; i++) {
+            if (controllers.length === i) {
+                response.writeHead(404, {'Content-Type': 'text/plain'});
+                response.end('Page not found: ' + route);
+            }
+            else if (controllers[i].getRoute() === route) {
                 //TODO check if controller accepts authentication level
                 controllers[i].action(response, json, url['query']);
-		routeExists = true;
+                break;
             }
         }
-	if (!routeExists) {
-       		 response.writeHead(404, {'Content-Type': 'text/plain'});
-       		 response.end('Page not found: ' + route);
-	}
     });
 }).listen(8081);
 
