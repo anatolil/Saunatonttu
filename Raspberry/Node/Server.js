@@ -6,15 +6,18 @@
 var http = require('http');
 var TimeController = require('./TimeController.js');
 var LedController = require('./LedController.js');
+var TemperatureController = require('./TemperatureController.js');
 
-//TODO initialize controllers
+//Initialize controllers
 var controllers = new Array();
 controllers.push(new TimeController());
 controllers.push(new LedController());
+controllers.push(new TemperatureController());
 
 http.createServer(function (request, response)
 {	
-    //TODO get possible authenticationHeaders
+    //get authentication header
+    var authenticationToken = request.headers['Authentication'];
 
     var jsonString = '';
     request.on('data', function (data) {
