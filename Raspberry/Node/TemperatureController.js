@@ -32,9 +32,6 @@ TemperatureController.prototype.action = function (response, json, query)
                     response.end(jsonResponse);
                     serialport.close();
                 }
-                else {
-                    console.log(data);
-                }
             });
         }
      });
