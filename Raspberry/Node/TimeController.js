@@ -1,3 +1,5 @@
+var loadHtml = require('./HtmlLoader.js');
+
 var route;
 
 function TimeController()
@@ -13,10 +15,11 @@ TimeController.prototype.getRoute = function()
 TimeController.prototype.action = function(response, json, query)
 {
     response.writeHead(200, {'Content-Type': 'application/json'});
-    response.end(getUnixtime());
+    var date = new Date();
+    loadHtml(response, './showtime.html', { time: getUnixtimeJson(), hours: date.getHours(), minutes: date.getMinutes(), seconds: date.getSeconds() });
 }
 
-function getUnixtime()
+function getUnixtimeJson()
 {
     var date = new Date();
     return JSON.stringify({ unixtime: date.getTime() });

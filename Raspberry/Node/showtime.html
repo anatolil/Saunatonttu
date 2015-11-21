@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!-- Licensed by Gnome - Saunatonttu 0.0.1 -->
+<html>
+    <head>
+        <title>Test</title>
+        <meta charset="UTF-8">
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.knob/1.2.12/jquery.knob.min.js"></script>
+    </head>
+    <body>
+        <h1>Json aika: {{time}}</h1>
+        <div>_________________________________________________________________________________________</div>
+
+        <input type="text" value="{{hours}}" class="dial" data-max="23">
+        <input type="text" value=" {{minutes}} " class="dial" data-max="59">
+        <input type="text" value=" {{seconds}} " class="dial" data-max="59">
+    
+        <script>
+            $(function() {
+                $(".dial").knob();
+            });
+        </script>
+    </body>
+</html>
