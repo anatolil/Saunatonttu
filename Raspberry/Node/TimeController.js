@@ -16,7 +16,7 @@ TimeController.prototype.action = function(response, json, query)
 {
     response.writeHead(200, {'Content-Type': 'application/json'});
     var date = new Date();
-    loadHtml(response, './showtime.html', { time: getUnixtimeJson(), hours: date.getHours(), minutes: date.getMinutes(), seconds: date.getSeconds() });
+    loadHtml(response, './HTML/showtime.html', { time: getUnixtimeJson(), hours: date.getHours(), minutes: date.getMinutes(), seconds: date.getSeconds() });
 }
 
 function getUnixtimeJson()
