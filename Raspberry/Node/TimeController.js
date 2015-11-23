@@ -14,7 +14,7 @@ TimeController.prototype.getRoute = function()
 
 TimeController.prototype.action = function(response, json, query)
 {
-    response.writeHead(200, {'Content-Type': 'application/json'});
+    response.writeHead(200, {'Content-Type': 'text/html'});
     var date = new Date();
     loadHtml(response, './HTML/showtime.html', { time: getUnixtimeJson(), hours: date.getHours(), minutes: date.getMinutes(), seconds: date.getSeconds() });
 }

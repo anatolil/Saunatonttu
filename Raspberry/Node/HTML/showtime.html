@@ -11,14 +11,33 @@
         <h1>Json aika: {{time}}</h1>
         <div>_________________________________________________________________________________________</div>
 
-        <input type="text" value="{{hours}}" class="dial" data-max="23">
-        <input type="text" value=" {{minutes}} " class="dial" data-max="59">
-        <input type="text" value=" {{seconds}} " class="dial" data-max="59">
+        <input id="hours" type="text" value="{{hours}}" class="dial" data-max="23">
+        <input id="minutes" type="text" value=" {{minutes}} " class="dial" data-max="59">
+        <input id="seconds" type="text" value=" {{seconds}} " class="dial" data-max="59">
     
         <script>
             $(function() {
                 $(".dial").knob();
             });
+            
+            setInterval(myTimer, 1000);
+            
+            function myTimer() {
+                $.ajax({
+                    url: 'http://127.0.0.1:8081/get/time',
+                    type: 'GET',
+                    success: function (data) {
+                        $("hours").val(data['hours']);
+                        $("#minutes").val(data['minutes']);
+                        $("#seconds").val(data['seconds']);
+                        $(".dial").trigger('change');
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error: ' + error.message);
+                        console.log('Error connecting to the server.');
+                    },
+                });
+            }
         </script>
     </body>
 </html>
