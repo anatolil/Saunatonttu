@@ -24,7 +24,7 @@
             
             function myTimer() {
                 $.ajax({
-                    url: 'http://127.0.0.1:8081/get/time',
+                    url: '/get/time',
                     type: 'GET',
                     success: function (data) {
                         $("hours").val(data['hours']);
