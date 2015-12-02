@@ -31,8 +31,8 @@ http.createServer(function (request, response)
         var routeFound = false;
 
         for (var i = 0; i < controllers.length; i++) {
-             for (var controllerRoute in controllers[i].getRoute()) {
-                if(controllerRoute === route) {
+            for (var controllerRoute in controllers[i].getRoute()) {
+                if (controllerRoute === route) {
                     controllers[i].getRoute()[controllerRoute](response, json, url['query']);
                     routeFound = true;
                 }
@@ -40,9 +40,9 @@ http.createServer(function (request, response)
         }
         
         if (!routeFound) {
-             response.writeHead(404, {'Content-Type': 'text/plain'});
-             response.end('Page not found: ' + route);
-         }
+            response.writeHead(404, {'Content-Type': 'text/plain'});
+            response.end('Page not found: ' + route);
+        }
     });
 }).listen(8081);
 
