@@ -5,7 +5,7 @@ var route;
 
 function LedController()
 {
-    route = "/post/ledblink";
+    route = {"/post/ledblink": LedController.prototype.blinkLed};
     wyliodrin.pinMode (0, 1);
 }
 
@@ -14,7 +14,7 @@ LedController.prototype.getRoute = function()
     return route;
 }
 
-LedController.prototype.action = function(response, json, query)
+LedController.prototype.blinkLed = function(response, json, query)
 {
     if (json['led'] == 0) {
         wyliodrin.digitalWrite (0, 0);

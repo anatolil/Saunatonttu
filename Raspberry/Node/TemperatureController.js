@@ -9,7 +9,7 @@ var route;
 
 function TemperatureController()
 {
-    route = "/get/temperature";
+    route = {"/get/temperature": TemperatureController.prototype.renderTemperature};
 }
 
 TemperatureController.prototype.getRoute = function()
@@ -17,7 +17,7 @@ TemperatureController.prototype.getRoute = function()
     return route;
 }
 
-TemperatureController.prototype.action = function (response, json, query)
+TemperatureController.prototype.renderTemperature = function (response, json, query)
 {
     serialport.open(function (error) {
         if (error) {

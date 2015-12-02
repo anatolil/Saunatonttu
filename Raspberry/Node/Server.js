@@ -7,14 +7,12 @@ var http = require('http');
 var LedController = require('./LedController.js');
 var TemperatureController = require('./TemperatureController.js');
 var TimeController = require('./TimeController.js');
-var TimeCon = require('./TimeCon.js');
 
 //Initialize controllers
 var controllers = new Array();
 controllers.push(new LedController());
 controllers.push(new TemperatureController());
 controllers.push(new TimeController());
-controllers.push(new TimeCon())
 
 http.createServer(function (request, response)
 {	
@@ -30,18 +28,21 @@ http.createServer(function (request, response)
         var json = jsonString.length ? JSON.parse(jsonString) : '';
         var url = require('url').parse(request.url, true);
         var route = url['pathname'];
+        var notFound = false;
 
-        for (var i = 0; i <= controllers.length; i++) {
-            if (controllers.length === i) {
-                response.writeHead(404, {'Content-Type': 'text/plain'});
-                response.end('Page not found: ' + route);
-            }
-            else if (controllers[i].getRoute() === route) {
-                //TODO check if controller accepts authentication level
-                controllers[i].action(response, json, url['query']);
-                break;
+        for (var i = 0; i < controllers.length; i++) {
+             for (var controllerRoute in controllers[i].getRoute()) {
+                if(controllerRoute === route) {
+                    controllers[i].getRoute()[controllerRoute](response, json, url['query']);
+                    notFound = true;
+                }
             }
         }
+        
+        if (!notFound) {
+             response.writeHead(404, {'Content-Type': 'text/plain'});
+             response.end('Page not found: ' + route);
+         }
     });
 }).listen(8081);
 
