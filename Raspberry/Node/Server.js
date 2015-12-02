@@ -28,18 +28,18 @@ http.createServer(function (request, response)
         var json = jsonString.length ? JSON.parse(jsonString) : '';
         var url = require('url').parse(request.url, true);
         var route = url['pathname'];
-        var notFound = false;
+        var routeFound = false;
 
         for (var i = 0; i < controllers.length; i++) {
              for (var controllerRoute in controllers[i].getRoute()) {
                 if(controllerRoute === route) {
                     controllers[i].getRoute()[controllerRoute](response, json, url['query']);
-                    notFound = true;
+                    routeFound = true;
                 }
             }
         }
         
-        if (!notFound) {
+        if (!routeFound) {
              response.writeHead(404, {'Content-Type': 'text/plain'});
              response.end('Page not found: ' + route);
          }
