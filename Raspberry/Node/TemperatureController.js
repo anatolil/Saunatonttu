@@ -27,9 +27,10 @@ TemperatureController.prototype.adjustTemperature = function (response, json, qu
     loadHtml(response, './HTML/showtemperature.html', null);
 }
 
-TemperatureController.prototype.temperatureChange = function ()
+TemperatureController.prototype.temperatureChange = function (response, json, query)
 {
-    
+    fs.writeFileSync('temperatureGoal.txt', json, 'utf8');
+    response.end('ok');
 }
 
 module.exports = TemperatureController;
