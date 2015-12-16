@@ -6,7 +6,7 @@
 <link href='http://users.metropolia.fi/~kasperki/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='http://users.metropolia.fi/~kasperki/fullCalendar/lib/moment.min.js'></script>
 <script src='http://users.metropolia.fi/~kasperki/fullCalendar/lib/jquery.min.js'></script>
-<script src='http://users.metropolia.fi/~kasperki/fullCalendar/fullcalendar.min.js'></script>
+<script src='http://users.metropolia.fi/~kasperki/fullCalendar/fullcalendar.js'></script>
 <script src='http://users.metropolia.fi/~kasperki/fullCalendar/lang-all.js'></script>
 <script>
 
@@ -34,25 +34,19 @@
 						end: end,
 						overlap: false
 					};
+                                        sendEvent(eventData);
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 				}
 				$('#calendar').fullCalendar('unselect');
 			},
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
-			events: {
-                            url: 'getEvents',
-                        },
+			events: '/get/getEvents',
 			
 		eventClick: function(calEvent, jsEvent, view) {
-				alert('Event: ' + calEvent.title);
-				alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-				alert('View: ' + view.name);
-
-				// change the border color just for fun
-				$(this).css('border-color', 'red');
-				
-				$('#calendar').fullCalendar('removeEvents',calEvent._id);
+                    // change the border color just for fun
+                    $(this).css('border-color', 'red');
+                    $('#calendar').fullCalendar('removeEvents',calEvent._id);
 		},
 		
 		eventResize: function( event, jsEvent, ui, view ) { 
@@ -67,6 +61,22 @@
 		
 
 	});
+        
+        function sendEvent(data) {
+            $.ajax({
+                url: '/post/saveEvent',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (data) {
+                    alert('ok');
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error: ' + error.message);
+                    console.log('Error connecting to the server.');
+                },
+            });
+        }
 </script>
 <style>
 
