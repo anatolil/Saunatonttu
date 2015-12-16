@@ -5,6 +5,7 @@ var events = new Array();
 
 function Event(title, start, end) 
 {
+    this.id = events.length + 1;
     this.title = title;
     this.start = start;
     this.end = end;
@@ -13,7 +14,7 @@ function Event(title, start, end)
 
 function TestController()
 {
-    route = { "/get/test": TestController.prototype.showTime, "/get/getEvents": TestController.prototype.getJson, "/post/saveEvent": TestController.prototype.saveEvent };
+    route = { "/get/test": TestController.prototype.showTime, "/get/getEvents": TestController.prototype.getJson, "/post/saveEvent": TestController.prototype.saveEvent, "/post/editEvent": TestController.prototype.editEvent };
 }
 
 TestController.prototype.getRoute = function()
@@ -36,6 +37,20 @@ TestController.prototype.getJson = function(response, json, query)
 TestController.prototype.saveEvent = function(response, json, query)
 {
     events.push(new Event(json['title'], json['start'], json['end']));
+}
+
+TestController.prototype.editEvent = function(response, json, query)
+{
+    for(var i = 0; i < events.length; i++)
+    {        
+        if(events[i].id === json['id'])
+        {
+            events[i].title = json['title'];
+            events[i].start = json['start']; 
+            events[i].end = json['end'];
+            break;
+        }
+    }
 }
 
 function getEventsJson()

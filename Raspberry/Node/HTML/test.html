@@ -34,7 +34,7 @@
 						end: end,
 						overlap: false
 					};
-                                        sendEvent(eventData);
+                                        createEvent(eventData);
 					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 				}
 				$('#calendar').fullCalendar('unselect');
@@ -43,34 +43,64 @@
 			eventLimit: true, // allow "more" link when too many events
 			events: '/get/getEvents',
 			
-		eventClick: function(calEvent, jsEvent, view) {
-                    // change the border color just for fun
-                    $(this).css('border-color', 'red');
-                    $('#calendar').fullCalendar('removeEvents',calEvent._id);
-		},
-		
-		eventResize: function( event, jsEvent, ui, view ) { 
-			alert('EventResized:' + event.title);
-		},
-			
-		eventDrop: function( event, jsEvent, ui, view ) { 
-			alert('EventDragged:' + event.title);
-		}
-		
-		});
-		
+                    eventClick: function(calEvent, jsEvent, view) {
+                        // change the border color just for fun
+                        $(this).css('border-color', 'red');
+                        $('#calendar').fullCalendar('removeEvents',calEvent._id);
+                    },
 
+                    eventResize: function( event, jsEvent, ui, view ) { 
+                        var eventData = {
+                                id: event.id,
+                                title: event.title,
+                                start: event.start,
+                                end: event.end,
+                                overlap: false
+                        };
+                        editEvent(eventData);
+                    },
+
+                    eventDrop: function( event, jsEvent, ui, view ) { 
+                        var eventData = {
+                                id: event.id,
+                                title: event.title,
+                                start: event.start,
+                                end: event.end,
+                                overlap: false
+                        };
+                        editEvent(eventData);
+                    }
+		});
 	});
         
-        function sendEvent(data) {
+        setInterval(function (){
+            myTimer();
+        }, 5000);
+                
+        function myTimer() {
+            $('#calendar').fullCalendar('removeEvents')
+            $('#calendar').fullCalendar('refetchEvents');
+        }
+        
+        function createEvent(data) {
             $.ajax({
                 url: '/post/saveEvent',
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: "application/json",
-                success: function (data) {
-                    alert('ok');
+                error: function (xhr, status, error) {
+                    console.log('Error: ' + error.message);
+                    console.log('Error connecting to the server.');
                 },
+            });
+        }
+        
+        function editEvent(data) {
+            $.ajax({
+                url: '/post/editEvent',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: "application/json",
                 error: function (xhr, status, error) {
                     console.log('Error: ' + error.message);
                     console.log('Error connecting to the server.');
