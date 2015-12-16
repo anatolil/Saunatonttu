@@ -24,7 +24,7 @@ TemperatureController.prototype.renderTemperature = function (response, json, qu
 TemperatureController.prototype.adjustTemperature = function (response, json, query)
 {
     response.writeHead(200, {'Content-Type': 'text/html'});
-    loadHtml(response, './HTML/showtemperature.html', null);
+    loadHtml(response, './HTML/showtemperature.html', { temperature: fs.readFileSync('temperature.txt', 'utf8'), tempchange: 80 });
 }
 
 TemperatureController.prototype.temperatureChange = function (response, json, query)

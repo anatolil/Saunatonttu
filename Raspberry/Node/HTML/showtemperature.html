@@ -7,17 +7,20 @@
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.knob/1.2.12/jquery.knob.min.js"></script>
     </head>
-    <body>
+    <body bgcolor="#001f30">
 	<center>
-            <input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250">
-	    <input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
+            <table border="0">
+                <tr><td><input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250" data-readOnly=true>
+                </td><td><input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
+                </tr><td><center><b>Lämpötila nyt</b></center></td><td><center><b>Toivottu lämpötila</b></center></td></tr>
+            </table>
         </center>
-	
+
         <script>
             $(function() {
                 $(".dial").knob();
             });
-            
+        
             $("#tempechange").knob({
                 'release' : function (v) { 
                 $.ajax({
@@ -33,7 +36,7 @@
             });
             
             setInterval(myTimer, 1000);
-            
+
             function myTimer() {
                 $.ajax({
                     url: '/get/temperature',
