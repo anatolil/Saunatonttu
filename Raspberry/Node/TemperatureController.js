@@ -1,12 +1,10 @@
 var fs = require('fs');
 
 var route;
-var temperatureWorker;
 
-function TemperatureController(TemperatureWorker)
+function TemperatureController()
 {
     route = {"/get/temperature": TemperatureController.prototype.renderTemperature};
-    temperatureWorker = TemperatureWorker;
 }
 
 TemperatureController.prototype.getRoute = function()
@@ -17,7 +15,7 @@ TemperatureController.prototype.getRoute = function()
 TemperatureController.prototype.renderTemperature = function (response, json, query)
 {
     response.writeHead(200, {'Content-Type': 'application/json'});
-    var jsonResponse = JSON.stringify({ temperature: temperatureWorker() });
+    var jsonResponse = JSON.stringify({ temperature: fs.readFileSync('temperature.txt') });
     response.end(jsonResponse);
 }
 
