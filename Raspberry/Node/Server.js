@@ -4,17 +4,17 @@
 
 //Using
 var http = require('http');
-//var LedController = require('./LedController.js');
-//var TemperatureController = require('./TemperatureController.js');
+var LedController = require('./LedController.js');
+var TemperatureController = require('./TemperatureController.js');
 var TimeController = require('./TimeController.js');
-var TestController = require('./test.js');
+var CalendarController = require('./CalendarController.js');
 
 //Initialize controllers
 var controllers = new Array();
-//controllers.push(new LedController());
-//controllers.push(new TemperatureController());
+controllers.push(new LedController());
+controllers.push(new TemperatureController());
 controllers.push(new TimeController());
-controllers.push(new TestController());
+controllers.push(new CalendarController());
 
 http.createServer(function (request, response)
 {	
