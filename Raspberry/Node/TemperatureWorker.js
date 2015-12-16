@@ -6,8 +6,6 @@ var serialport = new SerialPort.SerialPort("/dev/ttyACM0", {
     parser: SerialPort.parsers.readline("\n")
 }, false);
 
-var currentTemperature;
-
 serialport.open(function (error) {
     if (error) {
         console.log('Serial port error');
@@ -15,9 +13,7 @@ serialport.open(function (error) {
     else {
         serialport.on('data', function (data) {
             if (data.match(/(\d{2}\.\d{2})/)) {
-                currentTemperature = data.trim();
-                console.log(currentTemperature);
-                fs.writeFileSync('temperature.txt', currentTemperature);
+                fs.writeFileSync('temperature.txt', data.trim(), 'utf8');
             }
         });
     }
