@@ -22,7 +22,7 @@
             });
         
             $("#tempechange").knob({
-                'release' : function (v) { 
+                'change' : function (v) { 
                 $.ajax({
                     url: '/post/temperaturechange',
                     type: 'POST',
@@ -35,14 +35,15 @@
                 }); }
             });
             
-            setInterval(myTimer, 1000);
+            setInterval(getTemperature, 1000);
 
-            function myTimer() {
+            function getTemperature() {
                 $.ajax({
-                    url: '/get/temperature',
+                    url: '/get/temperatureadjust',
                     type: 'GET',
                     success: function (data) {
                         $("#temperature").val(data['temperature']);
+                        $("#tempechange").val(data['temperatureWanted']);
                         $(".dial").trigger('change');
                     },
                     error: function (xhr, status, error) {

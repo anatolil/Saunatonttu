@@ -26,7 +26,7 @@
             selectable: true,
             selectHelper: true,
             select: function(start, end) {
-                var title = "Kiiskinen";
+                var title = "Korhonen";
                 var eventData;
                 if (title) {
                     eventData = {
@@ -36,7 +36,8 @@
                             overlap: false
                     };
                     createEvent(eventData);
-                    $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                    refreshEvents(); 
+                    //$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
                 }
                 $('#calendar').fullCalendar('unselect');
             },
@@ -80,16 +81,16 @@
                     overlap: false
                 };
                 editEvent(eventData);
-            }
+            },
         });
     });
 
     setInterval(function (){
-        myTimer();
-    }, 5000);
+        refreshEvents();
+    }, 2000);
 
-    function myTimer() {
-        $('#calendar').fullCalendar('removeEvents')
+    function refreshEvents() {
+        //refetch also removes first fck events and then feteches, thatswhy blik?
         $('#calendar').fullCalendar('refetchEvents');
     }
 
@@ -156,7 +157,7 @@
     <div id='calendar'></div>
     
     <div id="dialog" title="Varauksen muokkaus" style="display: none; width: 90% !important;">
-        <iframe src="/get/temperatureadjust" style="width: 99%; height: 250px; border: 0;"></iframe>
+        <iframe src="/get/temperature" style="width: 99%; height: 250px; border: 0;"></iframe>
         <br /><br />
         <center><a href="#" id="cancel" style="appearance: button; -webkit-appearance: button; -moz-appearance: button; background-color: red; color: white;">Peru varaus</a></center>
     </div>
