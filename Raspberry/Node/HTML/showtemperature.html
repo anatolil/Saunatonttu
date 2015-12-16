@@ -9,8 +9,8 @@
     </head>
     <body>
 	<center>
-            <input id="temperature1" type="text" value="{{temperature1}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250">
-	    <input id="temperature2" type="text" value="{{temperature2}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
+            <input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250">
+	    <input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
         </center>
 	
         <script>
@@ -23,7 +23,7 @@
 			url: '/post/temperaturechange',
 			type: 'POST',
 			success: function (data) {
-				$("#temperature2").val(data['temperature2']);
+				$("#tempchange").val(data['tempchange']);
 				$(".dial").trigger('change');
 			},
 			error: function (xhr, status, error) {
@@ -40,7 +40,7 @@
                     url: '/get/temperature',
                     type: 'GET',
                     success: function (data) {
-                        $("#temperature1").val(data['temperature1']);
+                        $("#temperature").val(data['temperature']);
                         $(".dial").trigger('change');
                     },
                     error: function (xhr, status, error) {
