@@ -2,14 +2,15 @@
 <!-- Licensed by Gnome - Saunatonttu 0.0.1 -->
 <html>
     <head>
-        <title>Test</title>
+        <title>Temperature</title>
         <meta charset="UTF-8">
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.knob/1.2.12/jquery.knob.min.js"></script>
     </head>
     <body>
 	<center>
-            <input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100">
+            <input id="temperature1" type="text" value="{{temperature1}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250">
+	    <input id="temperature2" type="text" value="{{temperature2}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
         </center>
 	
         <script>
@@ -17,6 +18,21 @@
                 $(".dial").knob();
             });
             
+	    function tempGoal() {
+		$.ajax({
+			url: '/post/temperaturechange',
+			type: 'POST',
+			success: function (data) {
+				$("#temperature2").val(data['temperature2']);
+				$(".dial").trigger('change');
+			},
+			error: function (xhr, status, error) {
+				console.log('Error: ' + error.message);
+				console.log('Error connecting to the server.');
+			},
+		});
+	    }
+
             setInterval(myTimer, 1000);
             
             function myTimer() {
@@ -24,7 +40,7 @@
                     url: '/get/temperature',
                     type: 'GET',
                     success: function (data) {
-                        $("#temperature").val(data['temperature']);
+                        $("#temperature1").val(data['temperature1']);
                         $(".dial").trigger('change');
                     },
                     error: function (xhr, status, error) {

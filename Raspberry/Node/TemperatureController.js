@@ -6,7 +6,7 @@ var route;
 
 function TemperatureController()
 {
-    route = {"/get/temperature": TemperatureController.prototype.renderTemperature, "/get/temperatureadjust": TemperatureController.prototype.adjustTemperature};
+    route = {"/get/temperature": TemperatureController.prototype.renderTemperature, "/get/temperatureadjust": TemperatureController.prototype.adjustTemperature, "/post/temperaturechange": TemperatureController.prototype.temperatureChange};
 }
 
 TemperatureController.prototype.getRoute = function()
@@ -25,6 +25,11 @@ TemperatureController.prototype.adjustTemperature = function (response, json, qu
 {
     response.writeHead(200, {'Content-Type': 'text/html'});
     loadHtml(response, './HTML/showtemperature.html', null);
+}
+
+TemperatureController.prototype.temperatureChange = function ()
+{
+    
 }
 
 module.exports = TemperatureController;
