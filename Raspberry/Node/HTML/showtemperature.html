@@ -7,17 +7,17 @@
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.knob/1.2.12/jquery.knob.min.js"></script>
     </head>
-    <body>
+    <body bgcolor="#001f30">
 	<center>
-            <input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250">
-	    <input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
+            <input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FBAE17" data-angleOffset="-125" data-angleArc="250">
+	    <input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#B4F0B7" data-angleOffset="-125" data-angleArc="250">
         </center>
-	
+
         <script>
             $(function() {
                 $(".dial").knob();
             });
-            
+
 	    function tempGoal() {
 		$.ajax({
 			url: '/post/temperaturechange',
@@ -34,7 +34,7 @@
 	    }
 
             setInterval(myTimer, 1000);
-            
+
             function myTimer() {
                 $.ajax({
                     url: '/get/temperature',
