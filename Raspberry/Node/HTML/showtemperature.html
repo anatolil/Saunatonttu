@@ -18,21 +18,20 @@
                 $(".dial").knob();
             });
             
-	    function tempGoal() {
-		$.ajax({
-			url: '/post/temperaturechange',
-			type: 'POST',
-			success: function (data) {
-				$("#tempchange").val(data['tempchange']);
-				$(".dial").trigger('change');
-			},
-			error: function (xhr, status, error) {
-				console.log('Error: ' + error.message);
-				console.log('Error connecting to the server.');
-			},
-		});
-	    }
-
+            $("#tempechange").knob({
+                'release' : function (v) { 
+                $.ajax({
+                    url: '/post/temperaturechange',
+                    type: 'POST',
+                    data: JSON.stringify(v),
+                    contentType: "application/json",
+                    error: function (xhr, status, error) {
+                            console.log('Error: ' + error.message);
+                            console.log('Error connecting to the server.');
+                    },
+                }); }
+            });
+            
             setInterval(myTimer, 1000);
             
             function myTimer() {

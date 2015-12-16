@@ -29,6 +29,7 @@ TemperatureController.prototype.adjustTemperature = function (response, json, qu
 
 TemperatureController.prototype.temperatureChange = function (response, json, query)
 {
+    console.log(json);
     fs.writeFileSync('temperatureGoal.txt', json, 'utf8');
     response.end('ok');
 }
