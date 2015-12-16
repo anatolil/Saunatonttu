@@ -15,7 +15,7 @@ serialport.open(function (error) {
     else {
         serialport.on('data', function (data) {
             if (data.match(/(\d{2}\.\d{2})/)) {
-                currentTemperature = event.data.trim();
+                currentTemperature = data.trim();
                 console.log(currentTemperature);
                 fs.writeFileSync('temperature.txt', currentTemperature);
             }
