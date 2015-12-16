@@ -9,8 +9,11 @@
     </head>
     <body>
 	<center>
-            <input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250">
-	    <input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
+            <table border="0">
+                <tr><td><input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250" data-readOnly=true>
+                </td><td><input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
+                </tr><td><center><b>Lämpötila nyt</b></center></td><td><center><b>Toivottu lämpötila</b></center></td></tr>
+            </table>
         </center>
 	
         <script>

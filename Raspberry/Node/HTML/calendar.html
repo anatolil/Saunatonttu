@@ -4,10 +4,13 @@
 <meta charset='utf-8' />
 <link href='https://hiekkalaatikko.eu/fullCalendar/fullcalendar.css' rel='stylesheet' />
 <link href='https://hiekkalaatikko.eu/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
 <script src='https://hiekkalaatikko.eu/fullCalendar/lib/moment.min.js'></script>
 <script src='https://hiekkalaatikko.eu/fullCalendar/lib/jquery.min.js'></script>
 <script src='https://hiekkalaatikko.eu/fullCalendar/fullcalendar.min.js'></script>
 <script src='https://hiekkalaatikko.eu/fullCalendar/lang-all.js'></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#calendar').fullCalendar({
@@ -42,6 +45,7 @@
             events: '/get/getEvents',
 
             eventClick: function(event, jsEvent, view) {
+                $( "#dialog" ).dialog();
                 // change the border color just for fun
                 $(this).css('border-color', 'red');
                 //$('#calendar').fullCalendar('removeEvents',calEvent._id);
@@ -53,7 +57,7 @@
                     end: event.end,
                     overlap: false
                 };
-                removeEvent(eventData);
+                $('#cancel').on('click', function() { removeEvent(eventData); $('#dialog').dialog('close'); });
             },
 
             eventResize: function( event, jsEvent, ui, view ) {
@@ -140,9 +144,22 @@
         max-width: 900px;
         margin: 0 auto;
     }
+    
+    .ui-dialog {
+        width: 90% !important;
+        max-width: 700px !important;
+        height: 350px !important;
+    }
 </style>
 </head>
 <body>
     <div id='calendar'></div>
+    
+    <div id="dialog" title="Varauksen muokkaus" style="display: none; width: 90% !important;">
+        <iframe src="/get/temperatureadjust" style="width: 99%; height: 250px; border: 0;"></iframe>
+        <br /><br />
+        <center><a href="#" id="cancel" style="appearance: button; -webkit-appearance: button; -moz-appearance: button; background-color: red; color: white;">Peru varaus</a></center>
+    </div>
+ 
 </body>
 </html>

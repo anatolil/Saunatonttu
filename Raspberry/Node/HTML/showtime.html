@@ -26,7 +26,7 @@
                     url: '/get/time',
                     type: 'GET',
                     success: function (data) {
-                        $("hours").val(data['hours']);
+                        $("#hours").val(data['hours']);
                         $("#minutes").val(data['minutes']);
                         $("#seconds").val(data['seconds']);
                         $(".dial").trigger('change');
