@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
 <script src='https://hiekkalaatikko.eu/fullCalendar/lib/moment.min.js'></script>
 <script src='https://hiekkalaatikko.eu/fullCalendar/lib/jquery.min.js'></script>
-<script src='https://hiekkalaatikko.eu/fullCalendar/fullcalendar.min.js'></script>
+<script src='https://hiekkalaatikko.eu/fullCalendar/fullcalendar.js'></script>
 <script src='https://hiekkalaatikko.eu/fullCalendar/lang-all.js'></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <script>
     $(document).ready(function() {
+        var title = [ "Korhonen", "Virtanen", "Hyppönen", "Mäkinen", "Grönholm", "Selänne" ];
+        title = title[Math.floor(Math.random()*title.length)]
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -25,8 +27,8 @@
             allDaySlot: false,
             selectable: true,
             selectHelper: true,
+            minTime: "09:00:00",
             select: function(start, end) {
-                var title = "Korhonen";
                 var eventData;
                 if (title) {
                     eventData = {
@@ -82,12 +84,18 @@
                 };
                 editEvent(eventData);
             },
+            
+            eventRender: function(event, element) {
+                if (event.title == title) {
+                    element.css("background-color", "red");
+                }
+            }
         });
     });
 
     setInterval(function (){
         refreshEvents();
-    }, 2000);
+    }, 500);
 
     function refreshEvents() {
         //refetch also removes first fck events and then feteches, thatswhy blik?
