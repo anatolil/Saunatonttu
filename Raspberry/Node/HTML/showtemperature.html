@@ -12,7 +12,7 @@
             <table border="0">
                 <tr><td><input id="temperature" type="text" value="{{temperature}}" class="dial" data-max="100" data-fgColor="#FFA600" data-angleOffset="-125" data-angleArc="250" data-readOnly=true>
                 </td><td><input id="tempechange" type="text" value="{{tempchange}}" class="dial" data-max="100" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250">
-                </tr><td><center><b>Lämpötila nyt</b></center></td><td><center><b>Toivottu lämpötila</b></center></td></tr>
+                </tr><td><center><font color="#FFA600"><b>Lämpötila nyt</font></b></center></td><td><center><font color="#FFA600"><b>Toivottu lämpötila</b></font></center></td></tr>
             </table>
         </center>
 
@@ -20,9 +20,9 @@
             $(function() {
                 $(".dial").knob();
             });
-        
+
             $("#tempechange").knob({
-                'change' : function (v) { 
+                'change' : function (v) {
                 $.ajax({
                     url: '/post/temperaturechange',
                     type: 'POST',
@@ -34,7 +34,7 @@
                     },
                 }); }
             });
-            
+
             setInterval(getTemperature, 1000);
 
             function getTemperature() {
